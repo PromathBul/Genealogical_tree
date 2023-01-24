@@ -5,24 +5,41 @@ public class Program {
 
     static HashMap<Relatives, String[]> dictPeople = new HashMap<>();
     public static void main(String[] args) {
-        Relatives me = new Relatives("1", "0", "Dmitry", "Тихонов");
-        Relatives wife = new Relatives("2", "0", "Darya", "Тихонова");
-        Relatives daughter = new Relatives("3", "1", "Полина", "Шишлова");
-        Relatives mother = new Relatives("4", "-1", "Надежда", "Тихонова");
-        Relatives father = new Relatives("5", "-1", "Владимир", "Тихонов");
-        Relatives grandma = new Relatives("6", "-2", "Мария", "Самохвалова");
-        Relatives grandpa = new Relatives("0", "-2", "Алексей", "Самохвалов");
-
-        dictPeople.put(me, me.getInfo());
-        dictPeople.put(wife, wife.getInfo());
-        dictPeople.put(daughter, daughter.getInfo());
-        dictPeople.put(mother, mother.getInfo());
-        dictPeople.put(father, father.getInfo());
-        dictPeople.put(grandma, grandma.getInfo());
-        dictPeople.put(grandpa, grandpa.getInfo());
-
+        Relatives common = new Relatives(null);
+        
         Scanner scanner = new Scanner(System.in, "cp866");
-        CommonMethods.menu(scanner);
+
+        String[] first = common.inputInfo(Relatives.listID, scanner);
+        Relatives one = new Relatives(first);
+
+        String[] second = common.inputInfo(Relatives.listID, scanner);
+        Relatives two = new Relatives(second);
+
+        // String[] third = common.inputInfo(Relatives.listID, scanner);
+        // Relatives three = new Relatives(third);
+        
+        // String[] forth = common.inputInfo(Relatives.listID, scanner);
+        // Relatives four = new Relatives(forth);
+
+        // String[] fifth = common.inputInfo(Relatives.listID, scanner);
+        // Relatives five = new Relatives(fifth);
+
+        // String[] sixth = common.inputInfo(Relatives.listID, scanner);
+        // Relatives six = new Relatives(sixth);
+
+        // String[] seventh = common.inputInfo(Relatives.listID, scanner);
+        // Relatives seven = new Relatives(seventh);
+
+        dictPeople.put(one, one.getInfo());
+        dictPeople.put(two, two.getInfo());
+        // dictPeople.put(three, three.getInfo());
+        // dictPeople.put(four, four.getInfo());
+        // dictPeople.put(five, five.getInfo());
+        // dictPeople.put(six, six.getInfo());
+        // dictPeople.put(seven, seven.getInfo());
+
+        Menu obj = new Menu();
+        obj.menu(scanner);
         scanner.close();
     }
     

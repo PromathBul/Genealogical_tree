@@ -1,25 +1,29 @@
-class Relatives extends People {
-    private String id;
-    private String generation;
+class Relatives implements People {
+
     private String[] info;
-    
-    Relatives (String id, String gen, String first, String last) {
-        super(first, last);
-        this.generation = gen;
-        this.id = id;
-        this.info = new String[] {id, gen, first, last};
+    static int[] listID;
+
+
+
+    static int[] getListID(int size) {
+        int[] list = new int[size];
+        int id = 0;
+
+        for (int i = 0; i < list.length; i++)
+            list[i] = id++;
+
+        return list;
     }
 
-    public String getGeneration() {
-        return generation;
+    static {
+        listID = getListID(100);
+    }
+
+    Relatives(String[] info) {
+        this.info = info;
     }
 
     public String[] getInfo() {
         return info;
     }
-
-    // @Override
-    // public void showInfo(){
-    //     System.out.printf("id: %s\n First name: %s\nLast name: %s\nGeneration: %s\n\n", this.info[0], this.info[2], this.info[3], this.info[1]);
-    // }
 }
