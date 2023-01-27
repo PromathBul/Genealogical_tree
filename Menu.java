@@ -68,7 +68,7 @@ public class Menu implements People{
     }
 
     public void menu() {
-        String txt = "";
+        String txt = "нет";
         while (!txt.equals("да")) {
             System.out.println("Выберите действие.");
             System.out.println(
