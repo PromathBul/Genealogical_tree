@@ -1,8 +1,13 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.function.UnaryOperator;
 import java.util.HashMap;
 
-public class Menu implements People {
+public class Menu implements People{
+
+    /** Метод возвращает случайное целое число от 0 до значения переданного аргумента
+     */
+    UnaryOperator<Integer> randomNum = max -> new Random().nextInt(max);
+
     public String diffGeneration(Relatives base, Relatives compare) {
         String txt = String.format("%s относительно %s: \n", compare.getInfo()[2], base.getInfo()[2]);
         int diff = Integer.parseInt(base.getInfo()[1]) - Integer.parseInt(compare.getInfo()[1]);
@@ -42,11 +47,6 @@ public class Menu implements People {
             return "нет данных\n";
     }
 
-    public int randomNum(int max) {
-        Random rnd = new Random();
-        return rnd.nextInt(max);
-    }
-
     public void showList(HashMap<Relatives, String[]> total) {
         for (String[] value : total.values()) {
             for (int count = 0; count < value.length; count++) {
@@ -67,39 +67,37 @@ public class Menu implements People {
         }
     }
 
-    public void menu(Scanner scanner) {
-        String txt = "нет";
+    public void menu() {
+        String txt = "";
         while (!txt.equals("да")) {
             System.out.println("Выберите действие.");
             System.out.println(
                     "1. Вывести список всех людей с информаицей о них.\n2. Получить взаимосвязь поколений между двумя случайными объектами.");
-            int choice = Integer.parseInt(input(
-                    "3. Получить взаимосвязь поколений между конкретными людьми.\n4. Ввести данные о новом человеке.\n",
-                    scanner));
+            int choice = Integer.parseInt(input.apply(
+                    "3. Получить взаимосвязь поколений между конкретными людьми.\n4. Ввести данные о новом человеке.\n"));
             if (choice == 1)
                 showList(Program.dictPeople);
             else if (choice == 2) {
-                String firstNum = Integer.toString(randomNum(Program.dictPeople.size()));
-                String secondNum = Integer.toString(randomNum(Program.dictPeople.size()));
+                String firstNum = Integer.toString(randomNum.apply(Program.dictPeople.size()));
+                String secondNum = Integer.toString(randomNum.apply(Program.dictPeople.size()));
                 Relatives firstObj = getKey(Program.dictPeople, firstNum, 0);
                 Relatives secondObj = getKey(Program.dictPeople, secondNum, 0);
                 String result = diffGeneration(firstObj, secondObj);
                 System.out.println(result);
             } else if (choice == 3) {
-                String firstPerson = input("Введите имя первого человека: ", scanner);
+                String firstPerson = input.apply("Введите имя первого человека: ");
                 System.out.println(firstPerson);
-                String secondPerson = input("Введите имя второго человека: ", scanner);
+                String secondPerson = input.apply("Введите имя второго человека: ");
                 Relatives firstObj = getKey(Program.dictPeople, firstPerson, 2);
                 Relatives secondObj = getKey(Program.dictPeople, secondPerson, 2);
                 String result = diffGeneration(firstObj, secondObj);
                 System.out.println(result);
-            } /*
-               * else {
-               * Relatives obj = createPerson(Relatives.listID, scanner);
-               * Program.dictPeople.put(obj, obj.getInfo());
-               * }
-               */
-            txt = input("Введите 'да', если хотите завершить, и нажмите ввод, чтобы продолжить...", scanner);
+            } else {
+                Relatives obj = createPerson.apply(Relatives.listID);
+                Program.dictPeople.put(obj, obj.getInfo());
+            }
+
+            txt = input.apply("Введите 'да', если хотите завершить, и нажмите ввод, чтобы продолжить...");
         }
 
     }
